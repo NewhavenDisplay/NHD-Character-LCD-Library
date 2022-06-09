@@ -96,9 +96,9 @@ class NHD_Character_LCD {
         void scrollScreenRight();
         void moveCursorLeft();
         void moveCursorRight();
+        void setCursorBehavior(uint8_t movement, uint8_t direction);
         void backspace();
         void setEntryMode(uint8_t incDec, uint8_t displayShift);
-        void setCursorBehavior(uint8_t movement, uint8_t direction);
         void setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink);
         void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
 };
