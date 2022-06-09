@@ -358,7 +358,7 @@ void NHD_Character_LCD::write(uint8_t data)
     setDataMode();
     setWriteMode();
     dataLatch();
-  } else if(this->_interface = parallel4bit)
+  } else if(this->_interface == parallel4bit)
   {
     set4bitDataPins(data >> 4);
     setDataMode();
