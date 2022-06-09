@@ -30,7 +30,31 @@
 
 class NHD_Character_LCD {
     private:
+        // Flags
+        bool _is4x40 = false; // Default set for non-4x40
+        /**
+         * isTop == true : Use E/E1 for enable.
+         * ifTop == false : Use E2 for enable. (seen on 4x40 COB LCDs)
+         */
+        bool _isTop = true; // Default set for non-4x40
 
+        // Display Values.
+        int _columns;
+        int _rows;
+        uint8_t _rowOffsets[4];
+
+        // Pin Assignments
+        uint8_t _dataPins[8];
+        uint8_t _RS;
+        uint8_t _enable;
+        uint8_t _enable2;
+        uint8_t _RW;
+
+        enum interface {
+            parallel8bit,
+            parallel4bit
+        };
+        interface _interface;
     public:
         NHD_Character_LCD();
         // Function Prototypes
