@@ -373,8 +373,8 @@ void NHD_Character_LCD::write(uint8_t data)
 // For 8-bit parallel
 uint8_t NHD_Character_LCD::readBusyFlagAC()
 {
-  digitalWrite(this->_RS, LOW);
-  digitalWrite(this->_RW, HIGH);
+  setCommandMode();
+  setReadMode();
 
   digitalWrite(this->_enable, HIGH);
   delay(1);
@@ -476,7 +476,7 @@ void NHD_Character_LCD::setDisplayMode(uint8_t display, uint8_t cursor, uint8_t 
 
 void NHD_Character_LCD::setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font)
 {
-  command(0x20 | interface | lines | font);
+  command(FUNCTION_SET | interface | lines | font);
 }
 
 /*

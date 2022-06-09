@@ -14,6 +14,8 @@
 
 #define HOME 0x02
 
+#define FUNCTION_SET 0x20
+
 #define DISPLAY_MODE 0x08
 #define DISPLAY_ON 0x04
 #define DISPLAY_OFF 0x00
@@ -34,7 +36,7 @@ class NHD_Character_LCD {
         bool _is4x40 = false; // Default set for non-4x40
         /**
          * isTop == true : Use E/E1 for enable.
-         * ifTop == false : Use E2 for enable. (seen on 4x40 COB LCDs)
+         * isTop == false : Use E2 for enable. (seen on 4x40 COB LCDs)
          */
         bool _isTop = true; // Default set for non-4x40
 
@@ -57,7 +59,6 @@ class NHD_Character_LCD {
         interface _interface;
     public:
         NHD_Character_LCD();
-        // Function Prototypes
         void initLCD(uint8_t columns, uint8_t rows, 
                     uint8_t RS, uint8_t enable, uint8_t RW, 
                     uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
