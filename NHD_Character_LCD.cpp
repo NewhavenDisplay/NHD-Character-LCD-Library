@@ -27,16 +27,19 @@ enum interface {
   parallel8bit,
   parallel4bit
 };
-
 interface _interface;
 
+NHD_Character_LCD::NHD_Character_LCD()
+{
+    
+}
 
 /**
  * Initialize a NHD COB LCD for:
  * - 4-bit parallel interface
  * - One enable signal. (< 4x40)
  */
-void initLCD(uint8_t columns, uint8_t rows, 
+void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows, 
              uint8_t RS, uint8_t enable, uint8_t RW, 
              uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
 {
@@ -76,7 +79,7 @@ void initLCD(uint8_t columns, uint8_t rows,
  * - 4-bit parallel interface.
  * - Two enable signals. (2 top and 2 bottom rows)
  */
-void initLCD(uint8_t columns, uint8_t rows, 
+void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows, 
              uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
              uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
 {
@@ -127,7 +130,7 @@ void initLCD(uint8_t columns, uint8_t rows,
  * - 8-bit parallel interface
  * - One enable signal. (< 4x40)
  */
-void initLCD(uint8_t columns, uint8_t rows, 
+void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows, 
              uint8_t RS, uint8_t enable, uint8_t RW, 
              uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
              uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
@@ -173,7 +176,7 @@ void initLCD(uint8_t columns, uint8_t rows,
  * - 8-bit parallel interface.
  * - Two enable signals. (2 top and 2 bottom rows)
  */
-void initLCD(uint8_t columns, uint8_t rows, 
+void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows, 
              uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
              uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
              uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
@@ -229,7 +232,7 @@ void initLCD(uint8_t columns, uint8_t rows,
  * Set the connected LCD's row and column count
  * and clear the LCD screen.
  */
-void startLCD(uint8_t columns, uint8_t rows)
+void NHD_Character_LCD::startLCD(uint8_t columns, uint8_t rows)
 {
   _columns = columns;
   _rows = rows;
@@ -252,7 +255,7 @@ void startLCD(uint8_t columns, uint8_t rows)
   }
 }
 
-void wakeup()
+void NHD_Character_LCD::wakeup()
 {
   command(0x30);
   delay(30);
@@ -262,7 +265,7 @@ void wakeup()
   delay(10);
 }
 
-void wakeup4x40()
+void NHD_Character_LCD::wakeup4x40()
 {
   delay(15);
   setTop(); command(0x30);
@@ -276,7 +279,7 @@ void wakeup4x40()
   delay(5);
 }
 
-void set8bitDataPins(uint8_t data)
+void NHD_Character_LCD::set8bitDataPins(uint8_t data)
 {
   for (int i = 0; i < 8; i++)
   {
@@ -284,7 +287,7 @@ void set8bitDataPins(uint8_t data)
   }
 }
 
-void set4bitDataPins(uint8_t data)
+void NHD_Character_LCD::set4bitDataPins(uint8_t data)
 {
   for (int i = 4; i < 8; i++)
   {
@@ -292,12 +295,12 @@ void set4bitDataPins(uint8_t data)
   }
 }
 
-void setTop()
+void NHD_Character_LCD::setTop()
 {
   isTop = true;
 }
 
-void setBottom()
+void NHD_Character_LCD::setBottom()
 {
   isTop = is4x40 ? false : true;
 }
@@ -305,7 +308,7 @@ void setBottom()
 /**
  * Send a command data byte via 8-bit or 4-bit interface.
  */
-void command(uint8_t data)
+void NHD_Character_LCD::command(uint8_t data)
 {
   if(_interface == parallel8bit)
   {
@@ -325,27 +328,27 @@ void command(uint8_t data)
   }
 }
 
-void setCommandMode()
+void NHD_Character_LCD::setCommandMode()
 {
   digitalWrite(_RS, LOW); // Set command mode
 }
 
-void setDataMode()
+void NHD_Character_LCD::setDataMode()
 {
   digitalWrite(_RS, HIGH);
 }
 
-void setWriteMode()
+void NHD_Character_LCD::setWriteMode()
 {
   digitalWrite(_RW, LOW); // Set write mode
 }
 
-void setReadMode()
+void NHD_Character_LCD::setReadMode()
 {
   digitalWrite(_RW, HIGH); // Set read mode
 }
 
-void dataLatch()
+void NHD_Character_LCD::dataLatch()
 {
   if(isTop)
   {
@@ -362,7 +365,7 @@ void dataLatch()
 /**
  * Send a string of characters.
  */
-void write(unsigned char* data)
+void NHD_Character_LCD::write(unsigned char* data)
 {
   while(*data != '\0')
   {
@@ -374,7 +377,7 @@ void write(unsigned char* data)
 /**
  * Send one byte of data via 8-bit or 4-bit interface.
  */
-void write(uint8_t data)
+void NHD_Character_LCD::write(uint8_t data)
 {
   if(_interface == parallel8bit)
   {
@@ -395,7 +398,7 @@ void write(uint8_t data)
 }
 
 // For 8-bit parallel
-uint8_t readBusyFlagAC()
+uint8_t NHD_Character_LCD::readBusyFlagAC()
 {
   digitalWrite(_RS, LOW);
   digitalWrite(_RW, HIGH);
@@ -421,51 +424,51 @@ uint8_t readBusyFlagAC()
   return rxData;
 }
 
-void clearScreen()
+void NHD_Character_LCD::clearScreen()
 {
   command(CLEAR_SCREEN);
   delay(5);
 }
 
-void home()
+void NHD_Character_LCD::home()
 {
   command(HOME);
   delay(5);
 }
 
-void setCursor(int x, int y)
+void NHD_Character_LCD::setCursor(int x, int y)
 {
   uint8_t DDRAM_addr = (_rowOffsets[y] + x) | 0x80;
   command(DDRAM_addr);
   delay(1);
 }
 
-void scrollScreenLeft()
+void NHD_Character_LCD::scrollScreenLeft()
 {
   command(0b00011000);
 }
 
-void scrollScreenRight()
+void NHD_Character_LCD::scrollScreenRight()
 {
   command(0b00011100);
 }
 
-void moveCursorLeft()
+void NHD_Character_LCD::moveCursorLeft()
 {
   command(0b00010000);
 }
 
-void moveCursorRight()
+void NHD_Character_LCD::moveCursorRight()
 {
   command(0b00010100);
 }
 
-void setCursorBehavior(uint8_t movement, uint8_t direction)
+void NHD_Character_LCD::setCursorBehavior(uint8_t movement, uint8_t direction)
 {
   command(CURSOR_BEHAVIOR | movement | direction);
 }
 
-void backspace()
+void NHD_Character_LCD::backspace()
 {
   moveCursorLeft();
   write(' ');
@@ -480,7 +483,7 @@ enableShift
 disableShift
 */
 
-void setEntryMode(uint8_t incDec, uint8_t displayShift)
+void NHD_Character_LCD::setEntryMode(uint8_t incDec, uint8_t displayShift)
 {
   command(SET_ENTRY_MODE | incDec | displayShift);
 }
@@ -493,12 +496,12 @@ showCursor
 enableBlinkingCursor
 */
 
-void setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink)
+void NHD_Character_LCD::setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink)
 {
   command(DISPLAY_MODE | display | cursor | cursorBlink);
 }
 
-void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font)
+void NHD_Character_LCD::setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font)
 {
   command(0x20 | interface | lines | font);
 }
