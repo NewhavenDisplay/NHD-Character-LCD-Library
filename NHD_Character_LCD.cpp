@@ -1,11 +1,11 @@
 #include "NHD_Character_LCD.h"
 
-// Globals
-
 NHD_Character_LCD::NHD_Character_LCD()
 {
     
 }
+
+// Public Functions
 
 /**
  * Initialize a NHD COB LCD for:
@@ -202,83 +202,6 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
 }
 
 /**
- * Set the connected LCD's row and column count
- * and clear the LCD screen.
- */
-void NHD_Character_LCD::startLCD(uint8_t columns, uint8_t rows)
-{
-  this->_columns = columns;
-  this->_rows = rows;
-
-  if((columns == 40) && (rows == 4))
-  {
-    this->_is4x40 = true;
-
-    this->_rowOffsets[0] = 0x00;
-    this->_rowOffsets[1] = 0x40;
-    this->_rowOffsets[2] = 0x00;
-    this->_rowOffsets[3] = 0x40;
-  } else {
-    this->_is4x40 = false;
-
-    this->_rowOffsets[0] = 0x00;
-    this->_rowOffsets[1] = 0x40;
-    this->_rowOffsets[2] = columns;
-    this->_rowOffsets[3] = 0x40 + columns;
-  }
-}
-
-void NHD_Character_LCD::wakeup()
-{
-  command(0x30);
-  delay(30);
-  command(0x30);
-  delay(10);
-  command(0x30);
-  delay(10);
-}
-
-void NHD_Character_LCD::wakeup4x40()
-{
-  delay(15);
-  setTop(); command(0x30);
-  setBottom(); command(0x30);
-  delay(5);
-  setTop(); command(0x30);
-  setBottom(); command(0x30);
-  delay(5);
-  setTop(); command(0x30);
-  setBottom(); command(0x30);
-  delay(5);
-}
-
-void NHD_Character_LCD::set8bitDataPins(uint8_t data)
-{
-  for (int i = 0; i < 8; i++)
-  {
-    digitalWrite(this->_dataPins[i], (data >> i) & 0x01);
-  }
-}
-
-void NHD_Character_LCD::set4bitDataPins(uint8_t data)
-{
-  for (int i = 4; i < 8; i++)
-  {
-    digitalWrite(this->_dataPins[i], (data >> i - 4) & 0x01);
-  }
-}
-
-void NHD_Character_LCD::setTop()
-{
-  this->_isTop = true;
-}
-
-void NHD_Character_LCD::setBottom()
-{
-  this->_isTop = this->_is4x40 ? false : true;
-}
-
-/**
  * Send a command data byte via 8-bit or 4-bit interface.
  */
 void NHD_Character_LCD::command(uint8_t data)
@@ -298,40 +221,6 @@ void NHD_Character_LCD::command(uint8_t data)
 
     set4bitDataPins(data);
     dataLatch();
-  }
-}
-
-void NHD_Character_LCD::setCommandMode()
-{
-  digitalWrite(this->_RS, LOW); // Set command mode
-}
-
-void NHD_Character_LCD::setDataMode()
-{
-  digitalWrite(this->_RS, HIGH);
-}
-
-void NHD_Character_LCD::setWriteMode()
-{
-  digitalWrite(this->_RW, LOW); // Set write mode
-}
-
-void NHD_Character_LCD::setReadMode()
-{
-  digitalWrite(this->_RW, HIGH); // Set read mode
-}
-
-void NHD_Character_LCD::dataLatch()
-{
-  if(this->_isTop)
-  {
-    digitalWrite(this->_enable, HIGH);
-    delay(1);
-    digitalWrite(this->_enable, LOW);
-  } else {
-    digitalWrite(this->_enable2, HIGH);
-    delay(1);
-    digitalWrite(this->_enable2, LOW);
   }
 }
 
@@ -487,3 +376,117 @@ Read busy flag
 Read CGRAM
 Read DDRAM
 */
+
+// Private Functions
+
+/**
+ * Set the connected LCD's row and column count
+ * and clear the LCD screen.
+ */
+void NHD_Character_LCD::startLCD(uint8_t columns, uint8_t rows)
+{
+  this->_columns = columns;
+  this->_rows = rows;
+
+  if((columns == 40) && (rows == 4))
+  {
+    this->_is4x40 = true;
+
+    this->_rowOffsets[0] = 0x00;
+    this->_rowOffsets[1] = 0x40;
+    this->_rowOffsets[2] = 0x00;
+    this->_rowOffsets[3] = 0x40;
+  } else {
+    this->_is4x40 = false;
+
+    this->_rowOffsets[0] = 0x00;
+    this->_rowOffsets[1] = 0x40;
+    this->_rowOffsets[2] = columns;
+    this->_rowOffsets[3] = 0x40 + columns;
+  }
+}
+
+
+void NHD_Character_LCD::wakeup()
+{
+  command(0x30);
+  delay(30);
+  command(0x30);
+  delay(10);
+  command(0x30);
+  delay(10);
+}
+
+void NHD_Character_LCD::wakeup4x40()
+{
+  delay(15);
+  setTop(); command(0x30);
+  setBottom(); command(0x30);
+  delay(5);
+  setTop(); command(0x30);
+  setBottom(); command(0x30);
+  delay(5);
+  setTop(); command(0x30);
+  setBottom(); command(0x30);
+  delay(5);
+}
+
+void NHD_Character_LCD::set8bitDataPins(uint8_t data)
+{
+  for (int i = 0; i < 8; i++)
+  {
+    digitalWrite(this->_dataPins[i], (data >> i) & 0x01);
+  }
+}
+
+void NHD_Character_LCD::set4bitDataPins(uint8_t data)
+{
+  for (int i = 4; i < 8; i++)
+  {
+    digitalWrite(this->_dataPins[i], (data >> i - 4) & 0x01);
+  }
+}
+
+void NHD_Character_LCD::setTop()
+{
+  this->_isTop = true;
+}
+
+void NHD_Character_LCD::setBottom()
+{
+  this->_isTop = this->_is4x40 ? false : true;
+}
+
+void NHD_Character_LCD::setCommandMode()
+{
+  digitalWrite(this->_RS, LOW); // Set command mode
+}
+
+void NHD_Character_LCD::setDataMode()
+{
+  digitalWrite(this->_RS, HIGH);
+}
+
+void NHD_Character_LCD::setWriteMode()
+{
+  digitalWrite(this->_RW, LOW); // Set write mode
+}
+
+void NHD_Character_LCD::setReadMode()
+{
+  digitalWrite(this->_RW, HIGH); // Set read mode
+}
+
+void NHD_Character_LCD::dataLatch()
+{
+  if(this->_isTop)
+  {
+    digitalWrite(this->_enable, HIGH);
+    delay(1);
+    digitalWrite(this->_enable, LOW);
+  } else {
+    digitalWrite(this->_enable2, HIGH);
+    delay(1);
+    digitalWrite(this->_enable2, LOW);
+  }
+}

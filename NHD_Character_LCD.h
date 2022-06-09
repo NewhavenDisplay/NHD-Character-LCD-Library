@@ -31,7 +31,57 @@
 #define MOVE_LEFT 0x00
 
 class NHD_Character_LCD {
+    public:
+        NHD_Character_LCD();
+        void initLCD(uint8_t columns, uint8_t rows, 
+                    uint8_t RS, uint8_t enable, uint8_t RW, 
+                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
+        void initLCD(uint8_t columns, uint8_t rows, 
+                    uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
+                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
+        void initLCD(uint8_t columns, uint8_t rows, 
+                    uint8_t RS, uint8_t enable, uint8_t RW, 
+                    uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
+                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
+        void initLCD(uint8_t columns, uint8_t rows, 
+                    uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
+                    uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
+                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
+        
+        void command(uint8_t data);
+        void write(unsigned char* data);
+        void write(uint8_t data);
+        uint8_t readBusyFlagAC();
+        void clearScreen();
+        void home();
+        void setCursor(int x, int y);
+        void scrollScreenLeft();
+        void scrollScreenRight();
+        void moveCursorLeft();
+        void moveCursorRight();
+        void setCursorBehavior(uint8_t movement, uint8_t direction);
+        void backspace();
+        void setEntryMode(uint8_t incDec, uint8_t displayShift);
+        void setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink);
+        void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
+
     private:
+
+        void startLCD(uint8_t columns, uint8_t rows);
+        void wakeup();
+        void wakeup4x40();
+        void set8bitDataPins(uint8_t data);
+        void set4bitDataPins(uint8_t data);
+        void setTop();
+        void setBottom();
+
+        void setCommandMode();
+        void setDataMode();
+        void setWriteMode();
+        void setReadMode();
+        void dataLatch();
+
+
         // Flags
         bool _is4x40 = false; // Default set for non-4x40
         /**
@@ -57,50 +107,6 @@ class NHD_Character_LCD {
             parallel4bit
         };
         interface _interface;
-    public:
-        NHD_Character_LCD();
-        void initLCD(uint8_t columns, uint8_t rows, 
-                    uint8_t RS, uint8_t enable, uint8_t RW, 
-                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
-        void initLCD(uint8_t columns, uint8_t rows, 
-                    uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
-                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
-        void initLCD(uint8_t columns, uint8_t rows, 
-                    uint8_t RS, uint8_t enable, uint8_t RW, 
-                    uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
-                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
-        void initLCD(uint8_t columns, uint8_t rows, 
-                    uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW, 
-                    uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3, 
-                    uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
-        void startLCD(uint8_t columns, uint8_t rows);
-        void wakeup();
-        void wakeup4x40();
-        void set8bitDataPins(uint8_t data);
-        void set4bitDataPins(uint8_t data);
-        void setTop();
-        void setBottom();
-        void command(uint8_t data);
-        void setCommandMode();
-        void setDataMode();
-        void setWriteMode();
-        void setReadMode();
-        void dataLatch();
-        void write(unsigned char* data);
-        void write(uint8_t data);
-        uint8_t readBusyFlagAC();
-        void clearScreen();
-        void home();
-        void setCursor(int x, int y);
-        void scrollScreenLeft();
-        void scrollScreenRight();
-        void moveCursorLeft();
-        void moveCursorRight();
-        void setCursorBehavior(uint8_t movement, uint8_t direction);
-        void backspace();
-        void setEntryMode(uint8_t incDec, uint8_t displayShift);
-        void setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink);
-        void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
 };
 
 #endif
