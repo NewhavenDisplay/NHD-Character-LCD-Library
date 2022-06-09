@@ -412,6 +412,9 @@ void NHD_Character_LCD::home()
 void NHD_Character_LCD::setCursor(int x, int y)
 {
   uint8_t DDRAM_addr = (this->_rowOffsets[y] + x) | 0x80;
+
+    (x < 2) ? setTop() : setBottom();
+
   command(DDRAM_addr);
   delay(1);
 }
