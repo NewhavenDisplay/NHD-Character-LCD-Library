@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <Arduino.h>
+#include "LCD_Interface.h"
 
 #define SET_ENTRY_MODE 0x04
 #define DDRAM_INCREMENT 0x02
@@ -30,7 +31,7 @@
 #define MOVE_RIGHT 0x04
 #define MOVE_LEFT 0x00
 
-class NHD_Character_LCD
+class NHD_Character_LCD: public LCD_Interface
 {
 public:
     NHD_Character_LCD();
@@ -48,7 +49,6 @@ public:
                  uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW,
                  uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3,
                  uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7);
-
     void command(uint8_t data);
     void write(unsigned char *data);
     void write(uint8_t data);
@@ -70,8 +70,6 @@ private:
     void startLCD(uint8_t columns, uint8_t rows);
     void wakeup();
     void wakeup4x40();
-    void set8bitDataPins(uint8_t data);
-    void set4bitDataPins(uint8_t data);
     void setTop();
     void setBottom();
 
@@ -95,7 +93,6 @@ private:
     uint8_t _rowOffsets[4];
 
     // Pin Assignments
-    uint8_t _dataPins[8];
     uint8_t _RS;
     uint8_t _enable;
     uint8_t _enable2;

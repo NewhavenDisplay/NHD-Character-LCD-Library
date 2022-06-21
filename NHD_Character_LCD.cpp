@@ -2,6 +2,7 @@
 
 NHD_Character_LCD::NHD_Character_LCD()
 {
+
 }
 
 // Public Functions
@@ -26,15 +27,15 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     pinMode(RS, OUTPUT);
     pinMode(RW, OUTPUT);
 
-    this->_dataPins[4] = D4;
-    this->_dataPins[5] = D5;
-    this->_dataPins[6] = D6;
-    this->_dataPins[7] = D7;
+    _dataPins[4] = D4;
+    _dataPins[5] = D5;
+    _dataPins[6] = D6;
+    _dataPins[7] = D7;
 
     // Set all data pins to output mode.
     for (int i = 4; i < 8; i++)
     {
-        pinMode(this->_dataPins[i], OUTPUT);
+        pinMode(_dataPins[i], OUTPUT);
     }
 
     wakeup();
@@ -68,15 +69,15 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     pinMode(RS, OUTPUT);
     pinMode(RW, OUTPUT);
 
-    this->_dataPins[4] = D4;
-    this->_dataPins[5] = D5;
-    this->_dataPins[6] = D6;
-    this->_dataPins[7] = D7;
+    _dataPins[4] = D4;
+    _dataPins[5] = D5;
+    _dataPins[6] = D6;
+    _dataPins[7] = D7;
 
     // Set all data pins to output mode.
     for (int i = 4; i < 8; i++)
     {
-        pinMode(this->_dataPins[i], OUTPUT);
+        pinMode(_dataPins[i], OUTPUT);
     }
 
     wakeup4x40();
@@ -118,19 +119,19 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     pinMode(RS, OUTPUT);
     pinMode(RW, OUTPUT);
 
-    this->_dataPins[0] = D0;
-    this->_dataPins[1] = D1;
-    this->_dataPins[2] = D2;
-    this->_dataPins[3] = D3;
-    this->_dataPins[4] = D4;
-    this->_dataPins[5] = D5;
-    this->_dataPins[6] = D6;
-    this->_dataPins[7] = D7;
+    _dataPins[0] = D0;
+    _dataPins[1] = D1;
+    _dataPins[2] = D2;
+    _dataPins[3] = D3;
+    _dataPins[4] = D4;
+    _dataPins[5] = D5;
+    _dataPins[6] = D6;
+    _dataPins[7] = D7;
 
     // Set all data pins to output mode.
     for (int i = 0; i < 8; i++)
     {
-        pinMode(this->_dataPins[i], OUTPUT);
+        pinMode(_dataPins[i], OUTPUT);
     }
 
     digitalWrite(enable, LOW);
@@ -166,19 +167,19 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     pinMode(RS, OUTPUT);
     pinMode(RW, OUTPUT);
 
-    this->_dataPins[0] = D0;
-    this->_dataPins[1] = D1;
-    this->_dataPins[2] = D2;
-    this->_dataPins[3] = D3;
-    this->_dataPins[4] = D4;
-    this->_dataPins[5] = D5;
-    this->_dataPins[6] = D6;
-    this->_dataPins[7] = D7;
+    _dataPins[0] = D0;
+    _dataPins[1] = D1;
+    _dataPins[2] = D2;
+    _dataPins[3] = D3;
+    _dataPins[4] = D4;
+    _dataPins[5] = D5;
+    _dataPins[6] = D6;
+    _dataPins[7] = D7;
 
     // Set all data pins to output mode.
     for (int i = 0; i < 8; i++)
     {
-        pinMode(this->_dataPins[i], OUTPUT);
+        pinMode(_dataPins[i], OUTPUT);
     }
 
     wakeup4x40();
@@ -275,8 +276,8 @@ uint8_t NHD_Character_LCD::readBusyFlagAC()
     int pos = 7;
     for (int i = 0; i < 8; i++)
     {
-        rxData |= (digitalRead(this->_dataPins[i]) << pos);
-        Serial.print(digitalRead(this->_dataPins[i]));
+        rxData |= (digitalRead(_dataPins[i]) << pos);
+        Serial.print(digitalRead(_dataPins[i]));
 
         pos--;
     }
@@ -437,22 +438,6 @@ void NHD_Character_LCD::wakeup4x40()
     setBottom();
     command(0x30);
     delay(5);
-}
-
-void NHD_Character_LCD::set8bitDataPins(uint8_t data)
-{
-    for (int i = 0; i < 8; i++)
-    {
-        digitalWrite(this->_dataPins[i], (data >> i) & 0x01);
-    }
-}
-
-void NHD_Character_LCD::set4bitDataPins(uint8_t data)
-{
-    for (int i = 4; i < 8; i++)
-    {
-        digitalWrite(this->_dataPins[i], (data >> i - 4) & 0x01);
-    }
 }
 
 void NHD_Character_LCD::setTop()
