@@ -261,33 +261,6 @@ void NHD_Character_LCD::write(uint8_t data)
     }
 }
 
-// For 8-bit parallel
-uint8_t NHD_Character_LCD::readBusyFlagAC()
-{
-    setCommandMode();
-    setReadMode();
-
-    digitalWrite(this->_enable, HIGH);
-    delay(1);
-    digitalWrite(this->_enable, LOW);
-
-    // Read data
-    uint8_t rxData;
-    int pos = 7;
-    for (int i = 0; i < 8; i++)
-    {
-        rxData |= (digitalRead(_dataPins[i]) << pos);
-        Serial.print(digitalRead(_dataPins[i]));
-
-        pos--;
-    }
-
-    Serial.print(" RBF:");
-    Serial.println(rxData);
-
-    return rxData;
-}
-
 void NHD_Character_LCD::clearScreen()
 {
     command(CLEAR_SCREEN);
@@ -342,26 +315,10 @@ void NHD_Character_LCD::backspace()
     moveCursorLeft();
 }
 
-/*
-Entry mode set:
-setCursorMoveRight
-setCursorMoveLeft
-enableShift
-disableShift
-*/
-
 void NHD_Character_LCD::setEntryMode(uint8_t incDec, uint8_t displayShift)
 {
     command(SET_ENTRY_MODE | incDec | displayShift);
 }
-
-/*
-Display ON/OFF Control:
-displayON
-displayOFF
-showCursor
-enableBlinkingCursor
-*/
 
 void NHD_Character_LCD::setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink)
 {
@@ -381,10 +338,6 @@ Read DDRAM
 
 // Private Functions
 
-/**
- * Set the connected LCD's row and column count
- * and clear the LCD screen.
- */
 void NHD_Character_LCD::startLCD(uint8_t columns, uint8_t rows)
 {
     this->_columns = columns;
@@ -438,50 +391,4 @@ void NHD_Character_LCD::wakeup4x40()
     setBottom();
     command(0x30);
     delay(5);
-}
-
-void NHD_Character_LCD::setTop()
-{
-    this->_isTop = true;
-}
-
-void NHD_Character_LCD::setBottom()
-{
-    this->_isTop = this->_is4x40 ? false : true;
-}
-
-void NHD_Character_LCD::setCommandMode()
-{
-    digitalWrite(this->_RS, LOW); // Set command mode
-}
-
-void NHD_Character_LCD::setDataMode()
-{
-    digitalWrite(this->_RS, HIGH);
-}
-
-void NHD_Character_LCD::setWriteMode()
-{
-    digitalWrite(this->_RW, LOW); // Set write mode
-}
-
-void NHD_Character_LCD::setReadMode()
-{
-    digitalWrite(this->_RW, HIGH); // Set read mode
-}
-
-void NHD_Character_LCD::dataLatch()
-{
-    if (this->_isTop)
-    {
-        digitalWrite(this->_enable, HIGH);
-        delay(1);
-        digitalWrite(this->_enable, LOW);
-    }
-    else
-    {
-        digitalWrite(this->_enable2, HIGH);
-        delay(1);
-        digitalWrite(this->_enable2, LOW);
-    }
 }

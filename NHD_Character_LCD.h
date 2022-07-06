@@ -52,7 +52,6 @@ public:
     void command(uint8_t data);
     void write(unsigned char *data);
     void write(uint8_t data);
-    uint8_t readBusyFlagAC();
     void clearScreen();
     void home();
     void setCursor(int x, int y);
@@ -67,43 +66,18 @@ public:
     void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
 
 private:
+    /**
+     * Set the connected LCD's row and column count
+     * and clear the LCD screen.
+     */
     void startLCD(uint8_t columns, uint8_t rows);
     void wakeup();
     void wakeup4x40();
-    void setTop();
-    void setBottom();
-
-    void setCommandMode();
-    void setDataMode();
-    void setWriteMode();
-    void setReadMode();
-    void dataLatch();
-
-    // Flags
-    bool _is4x40 = false; // Default set for non-4x40
-    /**
-     * isTop == true : Use E/E1 for enable.
-     * isTop == false : Use E2 for enable. (seen on 4x40 COB LCDs)
-     */
-    bool _isTop = true; // Default set for non-4x40
 
     // Display Values.
     int _columns;
     int _rows;
     uint8_t _rowOffsets[4];
-
-    // Pin Assignments
-    uint8_t _RS;
-    uint8_t _enable;
-    uint8_t _enable2;
-    uint8_t _RW;
-
-    enum interface
-    {
-        parallel8bit,
-        parallel4bit
-    };
-    interface _interface;
 };
 
 #endif
