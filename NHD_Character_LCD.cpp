@@ -1,17 +1,12 @@
 #include "NHD_Character_LCD.h"
 
+// Public Functions
+
 NHD_Character_LCD::NHD_Character_LCD()
 {
 
 }
 
-// Public Functions
-
-/**
- * Initialize a NHD COB LCD for:
- * - 4-bit parallel interface
- * - One enable signal. (< 4x40)
- */
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
                                 uint8_t RS, uint8_t enable, uint8_t RW,
                                 uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
@@ -47,11 +42,6 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     clearScreen();
 }
 
-/**
- * Initialize a 4x40 NHD COB LCD for:
- * - 4-bit parallel interface.
- * - Two enable signals. (2 top and 2 bottom rows)
- */
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
                                 uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW,
                                 uint8_t D4, uint8_t D5, uint8_t D6, uint8_t D7)
@@ -98,11 +88,6 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     clearScreen();
 }
 
-/**
- * Initialize a NHD COB LCD for:
- * - 8-bit parallel interface
- * - One enable signal. (< 4x40)
- */
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
                                 uint8_t RS, uint8_t enable, uint8_t RW,
                                 uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3,
@@ -144,11 +129,6 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     clearScreen();
 }
 
-/**
- * Initialize a 4x40 NHD COB LCD for:
- * - 8-bit parallel interface.
- * - Two enable signals. (2 top and 2 bottom rows)
- */
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
                                 uint8_t RS, uint8_t enable, uint8_t enable2, uint8_t RW,
                                 uint8_t D0, uint8_t D1, uint8_t D2, uint8_t D3,
@@ -201,9 +181,6 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     clearScreen();
 }
 
-/**
- * Send a command data byte via 8-bit or 4-bit interface.
- */
 void NHD_Character_LCD::command(uint8_t data)
 {
     if (this->_interface == parallel8bit)
@@ -225,9 +202,6 @@ void NHD_Character_LCD::command(uint8_t data)
     }
 }
 
-/**
- * Send a string of characters.
- */
 void NHD_Character_LCD::write(unsigned char *data)
 {
     while (*data != '\0')
@@ -237,9 +211,6 @@ void NHD_Character_LCD::write(unsigned char *data)
     }
 }
 
-/**
- * Send one byte of data via 8-bit or 4-bit interface.
- */
 void NHD_Character_LCD::write(uint8_t data)
 {
     if (this->_interface == parallel8bit)
@@ -329,12 +300,6 @@ void NHD_Character_LCD::setFunctionMode(uint8_t interface, uint8_t lines, uint8_
 {
     command(FUNCTION_SET | interface | lines | font);
 }
-
-/*
-Read busy flag
-Read CGRAM
-Read DDRAM
-*/
 
 // Private Functions
 
