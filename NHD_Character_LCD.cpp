@@ -256,27 +256,22 @@ void NHD_Character_LCD::setCursor(int x, int y)
 
 void NHD_Character_LCD::scrollScreenLeft()
 {
-    command(0b00011000);
+    command(CURSOR_BEHAVIOR | SHIFT_DISPLAY);
 }
 
 void NHD_Character_LCD::scrollScreenRight()
 {
-    command(0b00011100);
+    command(CURSOR_BEHAVIOR | SHIFT_DISPLAY | MOVE_RIGHT);
 }
 
 void NHD_Character_LCD::moveCursorLeft()
 {
-    command(0b00010000);
+    command(CURSOR_BEHAVIOR| MOVE_LEFT);
 }
 
 void NHD_Character_LCD::moveCursorRight()
 {
-    command(0b00010100);
-}
-
-void NHD_Character_LCD::setCursorBehavior(uint8_t movement, uint8_t direction)
-{
-    command(CURSOR_BEHAVIOR | movement | direction);
+    command(CURSOR_BEHAVIOR | MOVE_RIGHT);
 }
 
 void NHD_Character_LCD::backspace()
