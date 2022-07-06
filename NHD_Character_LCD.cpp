@@ -166,16 +166,14 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
 
     setTop();
     command(0x38); // Function set: 8-bit / 2-line
-    // command(0x10); // Set cursor moving
-    setCursorBehavior(MOVE_CURSOR, MOVE_RIGHT);
+    moveCursorRight();
     setDisplayMode(DISPLAY_ON, CURSOR_ON, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
     clearScreen();
 
     setBottom();
     command(0x38);
-    // command(0x10);
-    setCursorBehavior(MOVE_CURSOR, MOVE_RIGHT);
+    moveCursorRight();
     setDisplayMode(DISPLAY_ON, CURSOR_ON, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
     clearScreen();
