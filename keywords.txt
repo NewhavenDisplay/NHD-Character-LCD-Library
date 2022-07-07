@@ -1,0 +1,18 @@
+# Syntax Coloring Map for NHD_Character_LCD Library
+
+NHD_Character_LCD	KEYWORD1
+
+initLCD	KEYWORD2
+command	KEYWORD2
+write	KEYWORD2
+clearScreen	KEYWORD2
+home	KEYWORD2
+setCursor	KEYWORD2
+scrollScreenLeft	KEYWORD2
+scrollScreenRight	KEYWORD2
+moveCursorRight	KEYWORD2
+moveCursorLeft	KEYWORD2
+backspace	KEYWORD2
+setEntryMode	KEYWORD2
+setDisplayMode	KEYWORD2
+setFunctionMode	KEYWORD2
