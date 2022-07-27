@@ -209,6 +209,15 @@ void NHD_Character_LCD::write(unsigned char *data)
     }
 }
 
+void NHD_Character_LCD::write(int x, int y, unsigned char *data)
+{
+    if(x <= this->_columns && y <= this->_rows)
+    {
+        setCursor(x, y);
+        write(data);
+    }
+}
+
 void NHD_Character_LCD::write(uint8_t data)
 {
     if (this->_interface == parallel8bit)

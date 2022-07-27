@@ -149,6 +149,8 @@ public:
      */
     void write(unsigned char *data);
 
+    void write(int x, int y, unsigned char *data);
+
     /**
      * Send one byte of data via 8-bit or 4-bit interface.
      * 
