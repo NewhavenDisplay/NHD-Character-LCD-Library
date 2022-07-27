@@ -244,12 +244,16 @@ void NHD_Character_LCD::home()
 
 void NHD_Character_LCD::setCursor(int x, int y)
 {
-    uint8_t DDRAM_addr = (this->_rowOffsets[y] + x) | 0x80;
+    // Only set the cursor if location is within display size
+    if(x <= this->_columns && y <= this->_rows)
+    {
+        uint8_t DDRAM_addr = (this->_rowOffsets[y] + x) | 0x80;
 
-    (x < 2) ? setTop() : setBottom();
+        (x < 2) ? setTop() : setBottom(); // Automatically set Top or Bottom
 
-    command(DDRAM_addr);
-    delay(1);
+        command(DDRAM_addr);
+        delay(1);
+    }
 }
 
 void NHD_Character_LCD::scrollScreenLeft()
