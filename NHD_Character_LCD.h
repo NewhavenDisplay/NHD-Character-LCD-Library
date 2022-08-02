@@ -142,6 +142,14 @@ public:
     void command(uint8_t data);
 
     /**
+     * Send one byte of data via 8-bit or 4-bit interface.
+     * 
+     * @param data Data byte to send to display.
+     * @return none
+     */
+    void write(uint8_t data);
+
+    /**
      * Send a string of characters.
      * 
      * @param data String of characters to write to display.
@@ -150,14 +158,6 @@ public:
     void write(unsigned char *data);
 
     void write(int x, int y, unsigned char *data);
-
-    /**
-     * Send one byte of data via 8-bit or 4-bit interface.
-     * 
-     * @param data Data byte to send to display.
-     * @return none
-     */
-    void write(uint8_t data);
 
     /**
      * Clear the LCD screen.
