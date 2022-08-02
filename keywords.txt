@@ -1,7 +1,9 @@
 # Syntax Coloring Map for NHD_Character_LCD Library
 
+# Classes
 NHD_Character_LCD	KEYWORD1
 
+# Functions
 initLCD	KEYWORD2
 command	KEYWORD2
 write	KEYWORD2
@@ -16,3 +18,5 @@ backspace	KEYWORD2
 setEntryMode	KEYWORD2
 setDisplayMode	KEYWORD2
 setFunctionMode	KEYWORD2
+setCustomCharacter	KEYWORD2
+defineCustomCharacter	KEYWORD2

@@ -251,6 +251,10 @@ public:
      */
     void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
 
+    void setCustomCharacter();
+
+    void defineCustomCharacter(uint8_t character[]);
+
 private:
 
     /**

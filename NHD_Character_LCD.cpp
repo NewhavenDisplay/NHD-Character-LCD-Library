@@ -307,6 +307,19 @@ void NHD_Character_LCD::setFunctionMode(uint8_t interface, uint8_t lines, uint8_
     command(FUNCTION_SET | interface | lines | font);
 }
 
+void NHD_Character_LCD::setCustomCharacter()
+{
+    command(0x40); // Set CGRAM Address for custom character
+}
+
+void NHD_Character_LCD::defineCustomCharacter(uint8_t character[])
+{
+    for(int i = 0; i < 8; i++)
+    {
+        write(character[i]);
+    }
+}
+
 // Private Functions
 
 void NHD_Character_LCD::startLCD(uint8_t columns, uint8_t rows)
