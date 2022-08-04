@@ -251,8 +251,34 @@ public:
      */
     void setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font);
 
+    /**
+     * Start defining custom characters.
+     * This function must be called before
+     * defineCustomCharacter().
+     * 
+     * @return none
+     */
     void setCustomCharacter();
 
+    /**
+     * Defines a single character into CGRAM.
+     * This function must be called after
+     * setCustomCharacter().
+     * Characters are defined in ascending order from 0 to 7.
+     * 
+     * Each character must be defined using an array of 8 bytes. 
+     * For example, 'A' is defined as:
+     * 0b00001110,
+     * 0b00010001,
+     * 0b00010001,
+     * 0b00010001,
+     * 0b00011111,
+     * 0b00010001,
+     * 0b00010001,
+     * 0b00000000
+     * 
+     * @param character An array of 8 bytes to define a character.
+     */
     void defineCustomCharacter(uint8_t character[]);
 
 private:
