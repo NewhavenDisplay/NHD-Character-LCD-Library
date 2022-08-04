@@ -157,6 +157,14 @@ public:
      */
     void write(unsigned char *data);
 
+    /**
+     * Send a string of characters, starting at cursor position (x, y).
+     * 
+     * @param x The desired column to place the cursor.
+     * @param y The desired row to place the cursor.
+     * @param data String of characters to write to display.
+     * @return none
+     */
     void write(int x, int y, unsigned char *data);
 
     /**
@@ -177,7 +185,7 @@ public:
      * Set the cursor to the desired (x, y) location.
      * 
      * @param x The desired column to place the cursor.
-     * @param y The desired row
+     * @param y The desired row to place the cursor.
      * @return none
      */
     void setCursor(int x, int y);
