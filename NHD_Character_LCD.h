@@ -16,6 +16,12 @@
 #define HOME 0x02
 
 #define FUNCTION_SET 0x20
+#define PARALLEL_8BIT 0x10
+#define PARALLEL_4BIT 0x00
+#define LINES_2 0x08
+#define LINES_1 0x00
+#define FONT_5_11 0x04
+#define FONT_5_8 0x00
 
 #define DISPLAY_MODE 0x08
 #define DISPLAY_ON 0x04

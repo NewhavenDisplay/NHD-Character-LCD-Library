@@ -165,14 +165,14 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     wakeup4x40();
 
     setTop();
-    command(0x38); // Function set: 8-bit / 2-line
+    setFunctionMode(PARALLEL_8BIT, LINES_2, FONT_5_8);
     moveCursorRight();
     setDisplayMode(DISPLAY_ON, CURSOR_OFF, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
     clearScreen();
 
     setBottom();
-    command(0x38);
+    setFunctionMode(PARALLEL_8BIT, LINES_2, FONT_5_8);
     moveCursorRight();
     setDisplayMode(DISPLAY_ON, CURSOR_OFF, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
