@@ -167,14 +167,14 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     setTop();
     command(0x38); // Function set: 8-bit / 2-line
     moveCursorRight();
-    setDisplayMode(DISPLAY_ON, CURSOR_ON, CURSOR_BLINK_OFF);
+    setDisplayMode(DISPLAY_ON, CURSOR_OFF, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
     clearScreen();
 
     setBottom();
     command(0x38);
     moveCursorRight();
-    setDisplayMode(DISPLAY_ON, CURSOR_ON, CURSOR_BLINK_OFF);
+    setDisplayMode(DISPLAY_ON, CURSOR_OFF, CURSOR_BLINK_OFF);
     setEntryMode(DDRAM_INCREMENT, NO_DISPLAY_SHIFT);
     clearScreen();
 }
@@ -232,7 +232,7 @@ void NHD_Character_LCD::write(unsigned char *data)
 
 void NHD_Character_LCD::write(int x, int y, unsigned char *data)
 {
-    if(x <= this->_columns && y <= this->_rows)
+    if(x <= this->_columns - 1 && y <= this->_rows - 1)
     {
         setCursor(x, y);
         write(data);
@@ -241,24 +241,57 @@ void NHD_Character_LCD::write(int x, int y, unsigned char *data)
 
 void NHD_Character_LCD::clearScreen()
 {
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(CLEAR_SCREEN);
+        delay(5);
+
+        setBottom();
+        command(CLEAR_SCREEN);
+        delay(5);
+
+        _isTop = isTopTemp;
+    }
     command(CLEAR_SCREEN);
     delay(5);
 }
 
 void NHD_Character_LCD::home()
 {
-    command(HOME);
-    delay(5);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(HOME);
+        delay(5);
+
+        setBottom();
+        command(HOME);
+        delay(5);
+
+        _isTop = isTopTemp;
+    } else {
+        command(HOME);
+        delay(5);
+    }
 }
 
 void NHD_Character_LCD::setCursor(int x, int y)
 {
     // Only set the cursor if location is within display size
-    if(x <= this->_columns && y <= this->_rows)
+    if(x <= this->_columns - 1 && y <= this->_rows - 1)
     {
-        uint8_t DDRAM_addr = (this->_rowOffsets[y] + x) | 0x80;
-
-        (x < 2) ? setTop() : setBottom(); // Automatically set Top or Bottom
+        uint8_t DDRAM_addr;
+        if((this->_columns == 16) && (this->_rows == 1) && (x >= 8) && (y == 0))
+        {
+            DDRAM_addr = (this->_rowOffsets[y + 1] + (x - 8)) | 0x80;
+        } else {
+            DDRAM_addr = (this->_rowOffsets[y] + x) | 0x80;
+        }
+        
+        (y < 2) ? setTop() : setBottom(); // Automatically set Top or Bottom
 
         command(DDRAM_addr);
         delay(1);
@@ -267,22 +300,68 @@ void NHD_Character_LCD::setCursor(int x, int y)
 
 void NHD_Character_LCD::scrollScreenLeft()
 {
-    command(CURSOR_BEHAVIOR | SHIFT_DISPLAY);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY);
+
+        setBottom();
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY);
+
+        _isTop = isTopTemp;
+    } else {
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY);
+    }
 }
 
 void NHD_Character_LCD::scrollScreenRight()
 {
-    command(CURSOR_BEHAVIOR | SHIFT_DISPLAY | MOVE_RIGHT);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY | MOVE_RIGHT);
+
+        setBottom();
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY | MOVE_RIGHT);
+
+        _isTop = isTopTemp;
+    } else {
+        command(CURSOR_BEHAVIOR | SHIFT_DISPLAY | MOVE_RIGHT);
+    }
 }
 
 void NHD_Character_LCD::moveCursorLeft()
 {
-    command(CURSOR_BEHAVIOR| MOVE_LEFT);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(CURSOR_BEHAVIOR| MOVE_LEFT);
+
+        setBottom();
+        command(CURSOR_BEHAVIOR| MOVE_LEFT);
+        _isTop = isTopTemp;
+    } else {
+        command(CURSOR_BEHAVIOR| MOVE_LEFT);
+    }
 }
 
 void NHD_Character_LCD::moveCursorRight()
 {
-    command(CURSOR_BEHAVIOR | MOVE_RIGHT);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(CURSOR_BEHAVIOR | MOVE_RIGHT);
+
+        setBottom();
+        command(CURSOR_BEHAVIOR | MOVE_RIGHT);
+        _isTop = isTopTemp;
+    } else {
+        command(CURSOR_BEHAVIOR | MOVE_RIGHT);
+    }
 }
 
 void NHD_Character_LCD::backspace()
@@ -294,17 +373,50 @@ void NHD_Character_LCD::backspace()
 
 void NHD_Character_LCD::setEntryMode(uint8_t incDec, uint8_t displayShift)
 {
-    command(SET_ENTRY_MODE | incDec | displayShift);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(SET_ENTRY_MODE | incDec | displayShift);
+
+        setBottom();
+        command(SET_ENTRY_MODE | incDec | displayShift);
+        _isTop = isTopTemp;
+    } else {
+        command(SET_ENTRY_MODE | incDec | displayShift);
+    }
 }
 
 void NHD_Character_LCD::setDisplayMode(uint8_t display, uint8_t cursor, uint8_t cursorBlink)
 {
-    command(DISPLAY_MODE | display | cursor | cursorBlink);
+    if(_is4x40)
+    {
+        bool isTopTemp = _isTop;
+        setTop();
+        command(DISPLAY_MODE | display | cursor | cursorBlink);
+
+        setBottom();
+        command(DISPLAY_MODE | display | cursor | cursorBlink);
+        _isTop = isTopTemp;
+    } else {
+        command(DISPLAY_MODE | display | cursor | cursorBlink);
+    }
 }
 
 void NHD_Character_LCD::setFunctionMode(uint8_t interface, uint8_t lines, uint8_t font)
 {
-    command(FUNCTION_SET | interface | lines | font);
+    if(_is4x40)
+    {   
+        bool isTopTemp = _isTop;
+        setTop();
+        command(FUNCTION_SET | interface | lines | font);
+
+        setBottom();
+        command(FUNCTION_SET | interface | lines | font);
+        _isTop = isTopTemp;
+    } else {
+        command(FUNCTION_SET | interface | lines | font);
+    }
 }
 
 void NHD_Character_LCD::setCustomCharacter()
