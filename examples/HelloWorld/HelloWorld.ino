@@ -21,7 +21,11 @@ NHD_Character_LCD lcd;
 
 void setup()
 {
-    lcd.initLCD(40, 4, 12, 11, 13, 10, 9, 8, 7, 6, 5, 4, 3, 2);
+    //lcd.initLCD(16, 2, 12, 11, 10, 5, 4, 3, 2); // For <4x40 LCD using 4-bit mode
+    //lcd.initLCD(40, 4, 12, 11, 13, 10, 5, 4, 3, 2); // For 4x40 LCD using 4-bit mode
+    //lcd.initLCD(16, 2, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2); // For <4x40 LCD using 8-bit mode
+
+    lcd.initLCD(40, 4, 12, 11, 13, 10, 9, 8, 7, 6, 5, 4, 3, 2); // For 4x40 LCD using 8-bit mode
     lcd.write(0, 0, (unsigned char*)"Hello World!");
 }
 
