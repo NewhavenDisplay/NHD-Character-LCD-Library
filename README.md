@@ -4,9 +4,9 @@ Upon release, this library will be available on the Arduino Library Manager.
 
 ## Library Download and Installation
 1. To download. Click on `Code -> Download ZIP` in the top right corner.
-2. Rename the uncompressed folder `NHD_US2066`. 
-3. Check that the `NHD_US2066` folder contains `NHD_US2066.cpp` and `NHD_US2066.h`
-4. Place the `NHD_US2066` library folder in your `/libraries/` folder. You may need to create the libraries subfolder if its your first library. 
+2. Rename the uncompressed folder `NHD-Character-LCD-Library`. 
+3. Check that the `NHD-Character-LCD-Library` folder contains `NHD_Character_LCD.cpp` and `NHD_Character_LCD.h`
+4. Place the `NHD-Character-LCD-Library` library folder in your `/libraries/` folder. You may need to create the libraries subfolder if its your first library. 
 5. Restart the IDE.
 
 ## NHD Website Code Library Options
@@ -38,46 +38,3 @@ Command functions will match the command list seen in the ST7066U spec sheet. We
 - Reference schematics
 - Class diagram?
 - 
-
-## Estimated Development Timeline
-Total Estimated Project Time: **2 Months**\
-*NOTE: These times are just an estimate and are subject to change.*
-
-1. Initial Planning | **2 Days**
-   1. Establish development timeline
-   2. Establish preliminary library structure
-   3. Establish intended library complexity
-   4. Establish required documentation practices/requirements
-   5. Establish where library indication will appear on NHD website.
-2. Initial Development | **1 Week**
-   1. Write a basic code library that works with any NHD character LCD using ST7066U.
-   2. Review code structure and implementation.
-   3. Create initial documentation.
-3. Feature Implementation | **1 Week**
-   1. Write any necessary features into code library. (Commands, command combinations, nice-to-haves, etc.)
-   2. Test all new features.
-4. Display Family Testing | **2 Weeks**
-   1. Test code with all variations of NHD character LCDs.
-   2. Create compatibiltiy spreadsheet.
-   3. Identify additional logic/functions/features required to accomodate for all NHD character LCDs.
-   4. Review library structure and use. Ensure easy usability after library is compatible with all NHD character LCDs.
-   5. Make library compatible with all variations of NHD character LCDs.
-   6. Re-test all variations of NHD character LCDs.
-5. Structure Review | **2 Days**
-   1. Review overall structure of library for readability, complexity, and ease-of-use.
-6. Library Finalization | **2 Days**
-   1. Perform any final refactoring, documentation, re-organization necessary after structure review.
-7. Library Testing | **1 Week**
-   1. Functional testing
-   2. Non-functional testing
-8. Create Library Examples | **1 Week**
-   1. Create suite of example programs to package with library.
-   2. May be able to convert testing sketches (or parts of tests) to examples.
-9.  Documentation | **1 Week**
-    1.  Review and improve documentation.
-10. Prepare to submit to Arduino Library Manager | **3 Days**
-    1.  Ensure library meets [acceptance criteria](https://github.com/arduino/library-registry/blob/main/FAQ.md#submission-requirements) for the Arduino Library Manager.
-11. Final Library Review | **2 Days**
-12. Submit Library to Arduino Library Manager | **1 Day**
-    1.  Follow [instructions to add library to registry](https://github.com/arduino/library-registry#instructions).
-13. Postmortem / Lessons Learned
