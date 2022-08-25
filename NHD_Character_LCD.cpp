@@ -33,13 +33,15 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
         pinMode(_dataPins[i], OUTPUT);
     }
 
+    digitalWrite(_enable, LOW);
     wakeup();
     command(0x20);
     command(0x28); // Function set: 4-bit / 2-line
     command(0x10); // Set cursor moving
-    command(0x0F); // Display ON : Cursor ON : Cursor blinking
+    command(0x0C); // Display ON
     command(0x06); // Entry mode set
     clearScreen();
+    command(0x0C); // Display ON
 }
 
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
@@ -75,17 +77,19 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     command(0x20);
     command(0x28); // Function set: 4-bit / 2-line
     command(0x10); // Set cursor moving
-    command(0x0F); // Display ON : Cursor ON : Cursor blinking
+    command(0x0C); // Display ON
     command(0x06); // Entry mode set
     clearScreen();
+    command(0x0C); // Display ON
 
     setBottom();
     command(0x20);
-    command(0x28);
-    command(0x10);
-    command(0x0F);
-    command(0x06);
+    command(0x28); // Function set: 4-bit / 2-line
+    command(0x10); // Set cursor movi
+    command(0x0C); // Display ON
+    command(0x06); // Entry mode set
     clearScreen();
+    command(0x0C); // Display ON
 }
 
 void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
@@ -124,7 +128,7 @@ void NHD_Character_LCD::initLCD(uint8_t columns, uint8_t rows,
     wakeup();
     command(0x38); // Function set: 8-bit / 2-line
     command(0x10); // Set cursor moving
-    command(0x0E); // Display ON : Cursor ON
+    command(0x0C); // Display ON
     command(0x06); // Entry mode set
     clearScreen();
 }
@@ -197,6 +201,7 @@ void NHD_Character_LCD::command(uint8_t data)
 
         set4bitDataPins(data);
         dataLatch();
+        delay(100);
     }
 }
 

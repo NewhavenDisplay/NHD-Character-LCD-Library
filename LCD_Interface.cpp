@@ -17,7 +17,7 @@ void LCD_Interface::set4bitDataPins(uint8_t data)
 {
     for (int i = 4; i < 8; i++)
     {
-        digitalWrite(this->_dataPins[i], (data >> i - 4) & 0x01);
+        digitalWrite(this->_dataPins[i], (data >> (i - 4)) & 0x01);
     }
 }
 
