@@ -201,7 +201,6 @@ void NHD_Character_LCD::command(uint8_t data)
 
         set4bitDataPins(data);
         dataLatch();
-        delay(100);
     }
 }
 
